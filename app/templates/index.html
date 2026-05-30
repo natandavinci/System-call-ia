@@ -6,7 +6,7 @@
 
     <meta charset="UTF-8">
     
-    <title>Assistente de Voz IA</title>
+    <title><h1>📞 Assistente Telefônico IA</h1></title>
 
     <link 
         rel="stylesheet"
@@ -19,26 +19,35 @@
 
 <body>
 
-    <div class="container">
+  <div class="container">
 
-        <h1>Assistente Virtual</h1>
+    <h1>Assistente Virtual</h1>
 
-        <p class="subtitle">Atendimento Inteligente por voz usando IA</p>
+    <p class="subtitle">
+        Atendimento Inteligente por voz usando IA
+    </p>
 
-        <button id="btn" class="voice-button">
-            Iniciar Conversa
-        </button>
+    <div id="call-status" class="call-status">
+        ⚪ Desconectado
+    </div>
 
-        <p id="status" class="status">
-            Aguardando...
-        </p>
+    <button id="btn" class="voice-button">
+        Iniciar Conversa
+    </button>
 
-        <div id="response" class="response-box">
-            Resposta da IA...
-        </div>
+    <p id="status" class="status">
+        Aguardando...
+    </p>
 
-    </div>  
+    <div id="response" class="response-box">
+        Resposta da IA...
+    </div>
 
+    <button id="btn-end">
+        Encerrar Chamada
+    </button>
+
+</div>
     <script src="/static/js/voice.js"></script>
 </body>
 </html>

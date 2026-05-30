@@ -1,6 +1,9 @@
 const btn = document.getElementById("btn");
 const status = document.getElementById("status");
 const responseBox = document.getElementById("response");
+const endCall = document.getElementById("btn-end");
+
+let chamadaAtiva = false;
 
 const ReconhecimentoFala =
     window.SpeechRecognition || 
@@ -13,6 +16,12 @@ if (!ReconhecimentoFala){
 } else{
 
     const reconhecimento = new ReconhecimentoFala()
+
+    reconhecimento.lang = "pt-BR";
+
+    reconhecimento.continuous = false;
+
+    reconhecimento.interimResults = false;
 
     //teste
     reconhecimento.onstart = () => {
@@ -35,27 +44,49 @@ if (!ReconhecimentoFala){
             "Erro: " + event.error;
     };
 
-    reconhecimento.lang = "pt-BR";
-
-    reconhecimento.continuous = false;
-
-    reconhecimento.interimResults = false;
+    reconhecimento.onend = () => {
+        console.log("Reconhecimento encerrado");
+    };
+    
 
     btn.addEventListener("click", () => {
 
-        status.innerText = "🎙️ Ouvindo...";
+        chamadaAtiva = true;
+
+        document.getElementById(
+            "call-status"
+        ).innerText = "🟢 Em chamada"
+
+    
+
+        status.innerText = "📞 Chamada iniciada";
 
         reconhecimento.start();
     });
 
+    endCall.addEventListener("click", () => {
+        chamadaAtiva = false;
+
+        reconhecimento.stop();
+
+        speechSynthesis.cancel();
+
+        document.getElementById(
+            "call-status"
+        ).innerText =
+            "⚪ Encerrada";
+
+        status.innerText = "📴 Chamada encerrada"
+    })
+
     reconhecimento.onresult = async (event) => {
-        console.log("1 - capturou áudio")
+        console.log("1 - capturou áudio");
         const texto =
             event.results[0][0].transcript;
 
-        console.log("2 - capturou áudio")
+        console.log("Texto", texto);
         status.innerText = 
-            "✅Texto capturado e enviando para o servidor"
+            "✅Enviando para IA"
 
         const resposta = await fetch(
             "/chat",
@@ -75,17 +106,14 @@ if (!ReconhecimentoFala){
 
         );
 
-        console.log("3 - capturou áudio")
 
         const data = 
             await resposta.json();
 
-        console.log("4 - Json recebido")
-
         responseBox.innerText =
             data.response;
 
-        console.log("5 - Texto exibido");
+        console.log("Resposta", data.response);
 
         const fala = new SpeechSynthesisUtterance(
             data.response
@@ -93,32 +121,27 @@ if (!ReconhecimentoFala){
 
         fala.lang = "pt-BR";
 
-        console.log("6 - Objeto de fala criado");
+        document.getElementById(
+            "call-status"
+        ).innerText =
+            "🟢 IA falando";
 
         speechSynthesis.speak(fala)
 
-        console.log("7 - falando");
+        fala.onend = () => {
 
-        status.innerText = 
-            "Resposta recebida";
+        document.getElementById(
+            "call-status"
+        ).innerText =
+            "🟢 Em chamada";
 
+        status.innerText =
+            "🎙️ Ouvindo novamente...";
 
-
+        reconhecimento.start();
     };
 
-    reconhecimento.onerror = (event) => {
+    status.innertext = "Resposta recebida";
 
-        status.innerText = 
-            "Erro: " + event.error;
     };
-
-    reconhecimento.onend = () => {
-
-        console.log("Reconhecimento encerrado");
-    };
-
-
-
-
-
 }
