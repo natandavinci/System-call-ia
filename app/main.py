@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel
 
 app = FastAPI()
 
@@ -27,3 +28,14 @@ async def home(request: Request):
         name="index.html"
 
     )
+
+#Testar comunicação
+class Message(BaseModel):
+    text: str
+
+@app.post("/chat")
+def chat(message: Message):
+
+    return {
+        "response": f"Você disse: {message.text}"
+    }

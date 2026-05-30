@@ -27,15 +27,43 @@ if (!ReconhecimentoFala){
         reconhecimento.start();
     });
 
-    reconhecimento.onresult = (event) => {
+    reconhecimento.onresult = async (event) => {
 
         const texto =
             event.results[0][0].transcript;
 
         status.innerText = 
-            "✅Texto capturado"
+            "✅Texto capturado e enviando para o servidor"
 
-        responseBox.innerText = texto
+        const resposta = await fetch(
+            "/chat",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
+
+                body: JSON.stringify({
+                    text: texto
+                })
+            }
+
+
+        );
+
+        const data = 
+            await resposta.json();
+
+        responseBox.innerText =
+            data.response;
+
+        status.innerText = 
+            "Resposta recebida";
+
+
+
     };
 
     reconhecimento.onerror = (event) => {
