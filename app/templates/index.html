@@ -1,19 +1,43 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="pt-BR">
+
 <head>
+
+    <meta charset="UTF-8">
+    
     <title>Assistente de Voz IA</title>
+
+    <link 
+        rel="stylesheet"
+        href="/app/static/css/style.css"
+    >
+
+
 </head>
+
+
 <body>
 
-    <h1>Assistente Virtual</h1>
+    <div class="container">
 
-    <button id="btn">
-        Iniciar Conversa
-    </button>
+        <h1>Assistente Virtual</h1>
 
-    <p id="status">
-        Aguardando...
-    </p>
+        <p class="subtitle">Atendimento Inteligente por voz usando IA</p>
+
+        <button id="btn" class="voice-button">
+            Iniciar Conversa
+        </button>
+
+        <p id="status" class="status">
+            Aguardando...
+        </p>
+
+        <div id="response" class="response-box">
+            Resposta da IA...
+        </div>
+
+    </div>  
 
 </body>
 </html>
