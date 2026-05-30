@@ -110,13 +110,20 @@ if (!ReconhecimentoFala){
         const data = 
             await resposta.json();
 
+        const textoLimpo =
+            data.response
+                .replace(/\*\*/g, "")
+                .replace(/\*/g, "")
+                .replace(/#/g, "")
+                .replace(/`/g, "");
+
         responseBox.innerText =
-            data.response;
+            textoLimpo;
 
         console.log("Resposta", data.response);
 
         const fala = new SpeechSynthesisUtterance(
-            data.response
+            textoLimpo
         );
 
         fala.lang = "pt-BR";
