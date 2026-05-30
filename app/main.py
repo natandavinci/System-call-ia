@@ -5,7 +5,13 @@ from fastapi.staticfiles import StaticFiles
 app = FastAPI()
 
 app.mount(
+
+    "/static",
+
+    StaticFiles(directory="app/static"),
     
+    name="static"
+
 )
 
 templates = Jinja2Templates(directory="app/templates")
@@ -13,7 +19,11 @@ templates = Jinja2Templates(directory="app/templates")
 
 @app.get("/")
 async def home(request: Request):
+   
     return templates.TemplateResponse(
+        
         request=request,
+        
         name="index.html"
+
     )
