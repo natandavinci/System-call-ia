@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
+from app.services.ai_services import pergunte_ai
 
 app = FastAPI()
 
@@ -36,6 +37,8 @@ class Message(BaseModel):
 @app.post("/chat")
 def chat(message: Message):
 
+    resposta = pergunte_ai(message.text)
+
     return {
-        "response": f"Você disse: {message.text}"
+        "response": resposta
     }
