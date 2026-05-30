@@ -27,6 +27,27 @@ if (!ReconhecimentoFala){
         reconhecimento.start();
     });
 
+    reconhecimento.onresult = (event) => {
+
+        const texto =
+            event.results[0][0].transcript;
+
+        status.innerText = 
+            "✅Texto capturado"
+
+        responseBox.innerText = texto
+    };
+
+    reconhecimento.onerror = (event) => {
+
+        status.innerText = 
+            "Erro: " + event.error;
+    };
+
+    reconhecimento.onend = () => {
+
+        console.log("Reconhecimento encerrado");
+    };
 
 
 
