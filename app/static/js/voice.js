@@ -97,7 +97,7 @@ if (!ReconhecimentoFala){
 
         console.log("Texto", texto);
         status.innerText = 
-            "✅Enviando para IA"
+            "✅Natanzinho Respondendo"
 
         const resposta = await fetch(
             "/chat",
@@ -142,7 +142,7 @@ if (!ReconhecimentoFala){
         document.getElementById(
             "call-status"
         ).innerText =
-            "🟢 IA falando";
+            "🟢 Natanzinho falando";
 
         speechSynthesis.speak(fala)
 
