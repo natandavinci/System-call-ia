@@ -1,3 +1,4 @@
+console.log("ARQUIVO JS NOVO CARREGADO");
 const btn = document.getElementById("btn");
 const status = document.getElementById("status");
 const responseBox = document.getElementById("response");
@@ -50,8 +51,14 @@ if (!ReconhecimentoFala){
     
 
     btn.addEventListener("click", () => {
-
+        console.log("Clique no botão iniciar");
         chamadaAtiva = true;
+
+        btn.style.display = "none";
+
+        endCall.style.display = "inline-block";
+        
+        console.log(endCall);
 
         document.getElementById(
             "call-status"
@@ -67,9 +74,13 @@ if (!ReconhecimentoFala){
     endCall.addEventListener("click", () => {
         chamadaAtiva = false;
 
+
         reconhecimento.stop();
 
         speechSynthesis.cancel();
+
+        btn.style.display = "inline-block";
+        endCall.style.display = "none";
 
         document.getElementById(
             "call-status"
