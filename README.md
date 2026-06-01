@@ -84,7 +84,7 @@ project-ia-call/
 │
 ├── app/
 │   ├── main.py
-│   ├── ai.py
+│   │
 │   ├── routes/
 |   |   └── voice.py
 |   | 
