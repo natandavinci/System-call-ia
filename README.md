@@ -89,7 +89,7 @@ project-ia-call/
 |   |   └── voice.py
 |   | 
 │   ├── templates/
-│   │    └── index.html
+│   │   └── index.html
 │   │   
 │   ├── services/
 │   │   └── ai_services.py
