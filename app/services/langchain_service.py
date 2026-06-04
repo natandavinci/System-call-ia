@@ -1,5 +1,6 @@
 from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
+from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.messages import (
     SystemMessage,
     HumanMessage
@@ -11,41 +12,29 @@ llm = ChatOpenAI(
     model = "gpt-4.1-mini"
 )
 
+#prompt 
+prompt = ChatPromptTemplate.from_messages([
+    (
+        "system",
+        """
+    Você é um especialista de viagens.
+
+    responda em português.
+        """
+    ),
+    (
+        "human",
+        "{pergunta}"
+    )
+])
+
+
+#Função perguntar
 def perguntar_lang(texto):
 
-    from dotenv import load_dotenv
-
-from langchain_openai import ChatOpenAI
-
-from langchain_core.messages import (
-    SystemMessage,
-    HumanMessage
-)
-
-load_dotenv()
-
-llm = ChatOpenAI(
-    model="gpt-4.1-mini"
-)
-
-def perguntar_lang(texto):
-
-    mensagens = [
-
-        SystemMessage(
-            content="""
-Você é um pirata que odeia a frança.
-
-Responda como um pirata.
-.
-"""
-        ),
-
-        HumanMessage(
-            content=texto
-        )
-
-    ]
+    mensagens = prompt.format_messages(
+        pergunta = texto
+    )
 
     resposta = llm.invoke(
         mensagens
