@@ -46,6 +46,7 @@ def pergunte_ai(text: str):
         historico[0]
     ] + historico[-20:]
 
+    # Pegando a resposta da OpenAI
     resposta = client.responses.create(
         model="gpt-4.1-mini",
         input = contexto
@@ -57,5 +58,6 @@ def pergunte_ai(text: str):
         "role": "assistant",
         "content": responder
     })
-
+    
+    #Envia a resposta para o backend
     return responder

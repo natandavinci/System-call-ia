@@ -30,15 +30,17 @@ async def home(request: Request):
 
     )
 
-#Testar comunicação
+#Dado que se espera
 class Message(BaseModel):
     text: str
 
 @app.post("/chat")
 def chat(message: Message):
 
+    #Envia para a openAI
     resposta = pergunte_ai(message.text)
 
+    #Envia a resposta para o Frontend
     return {
         "response": resposta
     }

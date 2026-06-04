@@ -6,6 +6,7 @@ const endCall = document.getElementById("btn-end");
 
 let chamadaAtiva = false;
 
+//Criando reconhecimento por voz
 const ReconhecimentoFala =
     window.SpeechRecognition || 
     window.webkitSpeechRecognition;
@@ -16,12 +17,15 @@ if (!ReconhecimentoFala){
         "Seu navegador não suporta reconhecimento por voz";
 } else{
 
+
+    //criando o objeto que controle o mic
     const reconhecimento = new ReconhecimentoFala()
 
     reconhecimento.lang = "pt-BR";
-
+    //parar de ouvir a cada frase
     reconhecimento.continuous = false;
 
+    //Parciais, recebendo apenas o resultado final para simplificar o fluxo
     reconhecimento.interimResults = false;
 
     //teste
@@ -50,13 +54,15 @@ if (!ReconhecimentoFala){
     };
     
 
+
+    //Iniciando a chamada
     btn.addEventListener("click", () => {
         console.log("Clique no botão iniciar");
         chamadaAtiva = true;
 
-        btn.style.display = "none";
+        btn.style.display = "none"; //esconde
 
-        endCall.style.display = "inline-block";
+        endCall.style.display = "inline-block"; //mostra 
         
         console.log(endCall);
 
@@ -68,6 +74,7 @@ if (!ReconhecimentoFala){
 
         status.innerText = "📞 Chamada iniciada";
 
+        //liga mic
         reconhecimento.start();
     });
 
@@ -90,15 +97,20 @@ if (!ReconhecimentoFala){
         status.innerText = "📴 Chamada encerrada"
     })
 
+    //Evento,Transcreve o audio
     reconhecimento.onresult = async (event) => {
         console.log("1 - capturou áudio");
+
+        //Transformou audio em rexto
         const texto =
             event.results[0][0].transcript;
 
         console.log("Texto", texto);
+
         status.innerText = 
             "✅Natanzinho Respondendo"
 
+        //Requisição ao Backend
         const resposta = await fetch(
             "/chat",
             {
@@ -109,6 +121,7 @@ if (!ReconhecimentoFala){
                         "application/json"
                 },
 
+                //Transforma o objeto em Json
                 body: JSON.stringify({
                     text: texto
                 })
@@ -117,7 +130,7 @@ if (!ReconhecimentoFala){
 
         );
 
-
+        //Recebe resposta, transforma o Json em objeto JS
         const data = 
             await resposta.json();
 
@@ -128,11 +141,13 @@ if (!ReconhecimentoFala){
                 .replace(/#/g, "")
                 .replace(/`/g, "");
 
+        //Exube texto na tela
         responseBox.innerText =
             textoLimpo;
 
         console.log("Resposta", data.response);
 
+        // Convertendo o texto para voz
         const fala = new SpeechSynthesisUtterance(
             textoLimpo
         );
@@ -144,8 +159,10 @@ if (!ReconhecimentoFala){
         ).innerText =
             "🟢 Natanzinho falando";
 
+        // Executa a fala
         speechSynthesis.speak(fala)
 
+        // Ia terminou de falar
         fala.onend = () => {
 
         document.getElementById(
@@ -156,6 +173,7 @@ if (!ReconhecimentoFala){
         status.innerText =
             "🎙️ Ouvindo novamente...";
 
+        //Já liga o mic automaticamente
         reconhecimento.start();
     };
 
