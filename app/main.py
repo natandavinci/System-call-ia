@@ -3,7 +3,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from app.services.ai_services import pergunte_ai
-
+from app.services.langchain_service import perguntar_lang
 app = FastAPI()
 
 app.mount(
@@ -38,7 +38,7 @@ class Message(BaseModel):
 def chat(message: Message):
 
     #Envia para a openAI
-    resposta = pergunte_ai(message.text)
+    resposta = perguntar_lang(message.text)
 
     #Envia a resposta para o Frontend
     return {

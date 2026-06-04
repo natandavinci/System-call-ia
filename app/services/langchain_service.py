@@ -65,6 +65,6 @@ def perguntar_lang(texto):
 
     resposta = llm.invoke(
         mensagens
-    )
+    ).content
 
-    return resposta.content
+    return resposta
