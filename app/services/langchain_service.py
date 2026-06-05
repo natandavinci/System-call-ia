@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from langchain_chroma.vectorstores import Chroma
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import OpenAIEmbeddings
+import re
 from langchain_core.messages import (
     SystemMessage,
     HumanMessage
@@ -63,8 +64,19 @@ def perguntar_lang(texto):
         base_conhecimento=base_conhecimento
     )
 
+   
     resposta = llm.invoke(
         mensagens
-    ).content
+    )
+   
+    text = resposta.content
+    
+    limpo = sanitize_tts(text)
 
-    return resposta
+    return limpo
+
+def sanitize_tts(text):
+    text = re.sub(r'[*#_`]', '', text)
+    text = re.sub(r'\n+', ' ', text)
+    text = re.sub(r'\s+', ' ', text)
+    return text.strip()
