@@ -1,20 +1,17 @@
 from app.tools.cliente_tool import consultar_cliente
 from app.tools.reserva_tool import consultar_reserva
 from app.tools.pagamento_tool import consulta_pagamento
+from app.agent.travel_agent import agent
 
-cliente = consultar_cliente.invoke(
-    {"telefone": "85999999998"}
+resposta = agent.invoke(
+    {
+        "messages": [
+            {
+                "role": "user",
+                "content": "Consulte a reserva 12000001 ,infome  a data da viagem"
+            }
+        ]
+    }
 )
 
-reserva = consultar_reserva.invoke(
-    {"codigo_reserva": "12000001"}
-)
-
-pagamento = consulta_pagamento.invoke(
-    {"codigo_reserva": "12000001"}
-)
-
-
-print(cliente)
-print(reserva)
-print(pagamento)
+print(resposta["messages"][-1].content)

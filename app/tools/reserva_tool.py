@@ -22,6 +22,7 @@ def consultar_reserva(codigo_reserva: int) -> str:
 
     return f"""
     Codigo da reserva: {reserva.codigo_reserva}
+    Data da Viagem: {reserva.data_viagem}
     Origem: {reserva.origem}
     Destino: {reserva.destino}
     Status: {reserva.status}
