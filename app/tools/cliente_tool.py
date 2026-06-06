@@ -1,12 +1,18 @@
 from app.database.connection import SessionLocal
 from app.database.models import Cliente
+from langchain_core.tools import tool
 
-def consultar_cliente(nome: str):
+
+@tool
+def consultar_cliente(telefone: str) -> str:
+    """
+    Consulta informações de um cliente pelo nome
+    """
     db = SessionLocal()
 
     cliente = (
         db.query(Cliente)
-        .filter(Cliente.nome.ilike(f"%{nome}%"))
+        .filter(Cliente.telefone == telefone)
         .first()
     )
 

@@ -1,12 +1,18 @@
 from app.database.connection import SessionLocal
 from app.database.models import Reserva
+from langchain_core.tools import tool
 
-def consultar_reserva(cliente_id: int):
+
+@tool 
+def consultar_reserva(codigo_reserva: int) -> str:
+    """
+    Consulta reserva pelo código da reserva.
+    """
     db = SessionLocal()
 
     reserva = (
         db.query(Reserva)
-        .filter(Reserva.cliente_id == cliente_id)
+        .filter(Reserva.codigo_reserva == codigo_reserva)
         .first()
     )
     db.close()
@@ -15,6 +21,8 @@ def consultar_reserva(cliente_id: int):
         return "Nenhuma reserva encontrada."
 
     return f"""
+    Codigo da reserva: {reserva.codigo_reserva}
+    Origem: {reserva.origem}
     Destino: {reserva.destino}
     Status: {reserva.status}
     Valor: {reserva.valor}
