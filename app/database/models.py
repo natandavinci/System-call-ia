@@ -3,7 +3,7 @@
 from sqlalchemy import Column, Integer, String, Float, ForeignKey
 from sqlalchemy.orm import relationship
 
-from connection import Base
+from app.database.connection import Base
 
 class Cliente(Base):
     __tablename__ = "clientes"

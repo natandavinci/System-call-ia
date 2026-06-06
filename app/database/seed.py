@@ -1,5 +1,5 @@
-from connection import SessionLocal
-from models import Cliente, Reserva, Pagamento
+from app.database.connection import SessionLocal
+from app.database.models import Cliente, Reserva, Pagamento
 
 db = SessionLocal()
 
