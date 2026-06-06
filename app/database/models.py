@@ -3,7 +3,7 @@
 from sqlalchemy import Column, Integer, String, Float, ForeignKey
 from sqlalchemy.orm import relationship
 
-from database.connection import Base
+from connection import Base
 
 class Cliente(Base):
     __tablename__ = "clientes"
@@ -18,7 +18,7 @@ class Cliente(Base):
 class Reserva(Base):
     __tablename__ = "reservas"
 
-    id = Column(Integer, primary_key=True, index=True),
+    id = Column(Integer, primary_key=True, index=True)
     cliente_id = Column(Integer, ForeignKey("clientes.id"))
 
     destino = Column(String)
@@ -28,7 +28,7 @@ class Reserva(Base):
 
     valor = Column(Float)
 
-    cliente = relationship("Cliente", back_populates="reserva")
+    cliente = relationship("Cliente", back_populates="reservas")
 
     pagamentos = relationship("Pagamento", back_populates="reserva")
 
@@ -47,4 +47,3 @@ class Pagamento(Base):
 
     reserva = relationship("Reserva", back_populates="pagamentos")
 
-    
