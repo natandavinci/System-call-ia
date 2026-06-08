@@ -39,7 +39,9 @@ class Message(BaseModel):
 def chat(message: Message):
 
     #Envia para a openAI
-    resposta = perguntar_agente(message.text)
+    resposta = perguntar_agente(
+        message.text,
+        "usuario_1")
 
     #Envia a resposta para o Frontend
     return {

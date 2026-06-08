@@ -1,6 +1,7 @@
 from app.agent.travel_agent import agent
 
-def perguntar_agente(pergunta: str) -> str:
+def perguntar_agente(pergunta: str, session_id: str) :
+
     resposta = agent.invoke(
         {
             "messages": [
@@ -9,6 +10,11 @@ def perguntar_agente(pergunta: str) -> str:
                     "content":pergunta
                 }
             ]
+        },
+        config={
+            "configurable": {
+                "thread_id": session_id
+            }
         }
     )
 
