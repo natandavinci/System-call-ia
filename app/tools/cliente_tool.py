@@ -6,8 +6,10 @@ from langchain_core.tools import tool
 @tool
 def consultar_cliente(telefone: str) -> str:
     """
-    Consulta informações de um cliente pelo nome
+    Consulta informações de um cliente pelo telefone
     """
+    print(telefone)
+    print("Iniciando consulta")
     db = SessionLocal()
 
     cliente = (
@@ -17,10 +19,10 @@ def consultar_cliente(telefone: str) -> str:
     )
 
     db.close()
-
+    print("finalizando consulta")
     if not cliente:
         return "Cliente não encontrado"
-
+    print(cliente.nome)
     return f""" 
     Nome: {cliente.nome}
     Email: {cliente.email}

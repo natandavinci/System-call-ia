@@ -3,25 +3,25 @@ from app.database.models import Cliente, Reserva, Pagamento
 
 db = SessionLocal()
 
-natan = Cliente(
-    nome="Natanael Queiroz",
-    telefone="85999999997",
-    email="natanael@email.com"
+eduarda = Cliente(
+    nome="Eduarda",
+    telefone="889392",
+    email="eduarda@gmail.com"
 )
 
-db.add(natan)
+db.add(eduarda)
 db.commit()
-db.refresh(natan)
+db.refresh(eduarda)
 
 reserva = Reserva(
-    cliente_id=natan.id,
-    codigo_reserva = "12000001",
-    data_viagem="2026-11-29",
+    cliente_id=eduarda.id,
+    codigo_reserva = "10",
+    data_viagem="2026-11-28",
     status="Confirmada",
-    valor=500.0,
+    valor=600.0,
     quantidade_passageiros = 2,
     origem = "Fortaleza",
-    destino="São Paulo",
+    destino="Salvador",
 
 )
 
@@ -31,16 +31,16 @@ db.refresh(reserva)
 
 pagamento = Pagamento(
     reserva_id=reserva.id,
-    valor=500.0,
+    valor=600.0,
     status="Pago",
-    vencimento="2026-06-10"
+    vencimento="2026-06-11"
 )
 
 db.add(pagamento)
 db.commit()
 
 
-#Helio
+"""#Helio
 
 
 helio = Cliente(
@@ -115,11 +115,11 @@ pagamento = Pagamento(
 )
 
 db.add(pagamento)
-db.commit()
+db.commit()"""
 
 
 
 
 db.close()
 
-print(f"Dados inseridos! {vlad} cadastrado")
+print(f"Dados inseridos! {eduarda} cadastrado")

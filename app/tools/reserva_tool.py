@@ -4,7 +4,7 @@ from langchain_core.tools import tool
 
 
 @tool 
-def consultar_reserva(codigo_reserva: int) -> str:
+def consultar_reserva(codigo_reserva: int) -> int:
     """
     Consulta reserva pelo código da reserva.
     """
@@ -19,7 +19,7 @@ def consultar_reserva(codigo_reserva: int) -> str:
 
     if not reserva:
         return "Nenhuma reserva encontrada."
-
+    print(reserva.codigo_reserva)
     return f"""
     Codigo da reserva: {reserva.codigo_reserva}
     Data da Viagem: {reserva.data_viagem}
