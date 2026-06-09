@@ -1,3 +1,18 @@
-venv/
+# banco local
+data/*.db
+
+# variáveis de ambiente
 .env
+
+# cache python
 __pycache__/
+*.pyc
+
+# ambiente virtual
+venv/
+
+# vscode
+.vscode/
+
+# pycharm
+.idea/

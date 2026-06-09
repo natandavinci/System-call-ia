@@ -1,8 +1,9 @@
 from app.agent.travel_agent import agent
 
-def perguntar_agente(pergunta: str, session_id: str) :
+async def perguntar_agente(pergunta: str, session_id: str) :
 
-    resposta = agent.invoke(
+#Envia para o travel-agent(openai)
+    resposta = await agent.ainvoke(
         {
             "messages": [
                 {
@@ -24,5 +25,6 @@ def perguntar_agente(pergunta: str, session_id: str) :
     texto = texto.replace("#", "")
     texto = texto.replace("\n", " ")
 
+    #Retorna a resposta para o backend(main) 
     return texto.strip()
 

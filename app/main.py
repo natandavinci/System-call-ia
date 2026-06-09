@@ -36,14 +36,14 @@ class Message(BaseModel):
     text: str
 
 @app.post("/chat")
-def chat(message: Message):
+async def chat(message: Message):
 
-    #Envia para a openAI
-    resposta = perguntar_agente(
+    #Envia para o Agente-service
+    resposta = await perguntar_agente(
         message.text,
         "usuario_1")
 
-    #Envia a resposta para o Frontend
+    #Recebe e envia a resposta para o Frontend
     return {
         "response": resposta
     }
