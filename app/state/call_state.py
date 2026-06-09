@@ -26,5 +26,7 @@ class CallState(TypedDict):
 
     reserva_confirmada: bool
 
+    resultado_tool: Optional[str]
+
 
 

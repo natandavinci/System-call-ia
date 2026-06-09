@@ -42,8 +42,27 @@ def router_node(state: CallState):
 
 def response_node(state: CallState):
 
-    state["resposta"] = f"""
-    Intenção detectada: {state['ultima_intencao']}
-    """
+    state["resposta"] = state.get(
+        "resultado_tool",
+        "Nenhuma informação encontrada."
+    )
+
+    return state
+
+from app.tools.reserva_tool import consultar_reserva
+from app.tools.pagamento_tool import consulta_pagamento
+from app.tools.cliente_tool import consultar_cliente
+
+def execute_tool_node(state: CallState):
+
+    if state["ultima_intencao"] == "consultar_reserva":
+
+        resultado = consultar_reserva.invoke(
+            {
+                "codigo_reserva": state["codigo_reserva"]
+            }
+        )
+
+        state["resultado_tool"] = resultado
 
     return state
